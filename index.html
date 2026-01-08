@@ -283,7 +283,7 @@
                     <div class="category-icon icon-work">💥</div>
                     <span class="category-text">DO ROBOTY</span>
                 </button>
-                <button class="category-btn active" onclick="selectCategory('OGARNIJ SIĘ', this)">
+                <button class="category-btn" onclick="selectCategory('OGARNIJ SIĘ', this)" id="default-category">
                     <div class="category-icon icon-focus">🌙</div>
                     <span class="category-text">OGARNIJ SIĘ</span>
                 </button>
@@ -362,6 +362,14 @@
         function playSelectedCategory() {
             speakText(selectedCategory);
         }
+
+        // Set default active category on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const defaultButton = document.getElementById('default-category');
+            if (defaultButton) {
+                defaultButton.classList.add('active');
+            }
+        });
     </script>
 </body>
 </html>
