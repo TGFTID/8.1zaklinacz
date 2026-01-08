@@ -270,7 +270,7 @@
             </div>
             <div class="play-controls" style="justify-content: center;">
                 <button class="control-btn">\u276d</button>
-                <button class="play-btn control-btn">▶</button>
+                <button class="play-btn control-btn" onclick="playSelectedCategory()">▶</button>
                 <button class="control-btn">\u276e</button>
             </div>
         </div>
@@ -279,39 +279,39 @@
         <div class="categories-section">
             <div class="section-title">Kategorie</div>
             <div class="categories-grid">
-                <button class="category-btn" onclick="speakText('DO ROBOTY')">
+                <button class="category-btn" onclick="selectCategory('DO ROBOTY', this)">
                     <div class="category-icon icon-work">💥</div>
                     <span class="category-text">DO ROBOTY</span>
                 </button>
-                <button class="category-btn" onclick="speakText('OGARNIJ SIĘ')">
+                <button class="category-btn" onclick="selectCategory('OGARNIJ SIĘ', this)" id="default-category">
                     <div class="category-icon icon-focus">🌙</div>
                     <span class="category-text">OGARNIJ SIĘ</span>
                 </button>
-                <button class="category-btn" onclick="speakText('CHAOS')">
+                <button class="category-btn" onclick="selectCategory('CHAOS', this)">
                     <div class="category-icon icon-chaos">\ud83c\udf2a️</div>
                     <span class="category-text">CHAOS</span>
                 </button>
-                <button class="category-btn" onclick="speakText('SENS')">
+                <button class="category-btn" onclick="selectCategory('SENS', this)">
                     <div class="category-icon icon-sense">\ud83c\udf0a</div>
                     <span class="category-text">SENS</span>
                 </button>
-                <button class="category-btn" onclick="speakText('SAMOTNOŚĆ')">
+                <button class="category-btn" onclick="selectCategory('SAMOTNOŚĆ', this)">
                     <div class="category-icon icon-alone">\ud83d\udd6f</div>
                     <span class="category-text">SAMOTNOŚĆ</span>
                 </button>
-                <button class="category-btn" onclick="speakText('WARTOŚĆ')">
+                <button class="category-btn" onclick="selectCategory('WARTOŚĆ', this)">
                     <div class="category-icon icon-value">\ud83d\udc8e</div>
                     <span class="category-text">WARTOŚĆ</span>
                 </button>
-                <button class="category-btn" onclick="speakText('SMUTNO')">
+                <button class="category-btn" onclick="selectCategory('SMUTNO', this)">
                     <div class="category-icon icon-sad">\ud83d\udca7</div>
                     <span class="category-text">SMUTNO</span>
                 </button>
-                <button class="category-btn" onclick="speakText('SERCE')">
+                <button class="category-btn" onclick="selectCategory('SERCE', this)">
                     <div class="category-icon icon-heart">\u2665️</div>
                     <span class="category-text">SERCE</span>
                 </button>
-                <button class="category-btn" onclick="speakText('ADHD')">
+                <button class="category-btn" onclick="selectCategory('ADHD', this)">
                     <div class="category-icon icon-adhd">\ud83e\udde \u200d\u2642️</div>
                     <span class="category-text">ADHD</span>
                 </button>
@@ -336,6 +336,8 @@
     </div>
 
     <script>
+        let selectedCategory = 'OGARNIJ SIĘ'; // Default category
+
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
@@ -344,6 +346,30 @@
                 speechSynthesis.speak(utterance);
             }
         }
+
+        function selectCategory(text, button) {
+            selectedCategory = text;
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+        }
+
+        function playSelectedCategory() {
+            speakText(selectedCategory);
+        }
+
+        // Set default active category on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const defaultButton = document.getElementById('default-category');
+            if (defaultButton) {
+                defaultButton.classList.add('active');
+            }
+        });
     </script>
 </body>
 </html>
